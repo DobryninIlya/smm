@@ -1,0 +1,53 @@
+[phone_proxies."79299135554"]
+proxy = "93.190.140.139:13654:9502853-all-country-RU-state-484048-city-551487:w05s80m8s"
+location = "THAILAND"
+like=true
+parse=true
+chat_links = [
+    "https://t.me/billboard_pattaya",
+    "https://t.me/thaiexchat",
+    "https://t.me/pattayaj",
+    "https://t.me/ExchangeMoney_ThaiL",
+    "https://t.me/phuketmarket_sale",
+#    "https://t.me/thailandtravelask",
+#    "https://t.me/kophangan",
+    "https://t.me/samui_live",
+    "https://t.me/pattaya_top",
+    "https://t.me/bangkok_forum",
+    "https://t.me/thai_chats",
+    "https://t.me/bangkok111",
+    "https://t.me/thailand_rus",
+    "https://t.me/expats_Thailand",
+    "https://t.me/forum_samui",
+    "https://t.me/chat_th",
+    "https://t.me/rusinthai2",
+    "https://t.me/tai_rutu",
+    "https://t.me/Lifein_Thailand",
+]
+
+[phone_proxies."79299136664"]
+proxy = "93.190.140.139:13654:9502853-all-country-RU-state-484048-city-551487:w05s80m8s"
+location = "THAILAND"
+like=true
+parse=true
+chat_links = [
+    "https://t.me/billboard_pattaya",
+    "https://t.me/thaiexchat",
+    "https://t.me/pattayaj",
+    "https://t.me/ExchangeMoney_ThaiL",
+    "https://t.me/phuketmarket_sale",
+    #    "https://t.me/thailandtravelask",
+    #    "https://t.me/kophangan",
+    "https://t.me/samui_live",
+    "https://t.me/pattaya_top",
+    "https://t.me/bangkok_forum",
+    "https://t.me/thai_chats",
+    "https://t.me/bangkok111",
+    "https://t.me/thailand_rus",
+    "https://t.me/expats_Thailand",
+    "https://t.me/forum_samui",
+    "https://t.me/chat_th",
+    "https://t.me/rusinthai2",
+    "https://t.me/tai_rutu",
+    "https://t.me/Lifein_Thailand",
+]

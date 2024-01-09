@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rent Car</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/catalog.css">
+    <link rel="stylesheet" href="/static/css/adaptive.css">
+    <script src="/static/js/main.js" defer></script>
+<!--    <script src="/static/json/cities.json"></script>-->
+</head>
+<body>
+<div class="main">
+    <div class="widget">
+        <div class="tabs">
+            <div class="category_tab active" onclick="selectTab(this,'legkovoj-transport')">
+                Легковой
+            </div>
+            <div class="category_tab" onclick="selectTab(this,'passazhirskij-transport')">
+                Пассажирский
+            </div>
+            <div class="category_tab" onclick="selectTab(this,'gruzovoy-transport-i-spectehnika')">
+                Грузовой
+            </div>
+            <div class="category_tab" onclick="selectTab(this, 'mototehnika')">
+                Мото
+            </div>
+            <div class="category_tab" onclick="selectTab(this,'vodnyj-transport')">
+                Водный
+            </div>
+            <div class="category_tab" onclick="selectTab(this, 'vozdushnaya-tehnika')">
+                Воздушный
+            </div>
+        </div>
+        <div class="middle-form">
+            <div class="middle-form-row">
+                <div class="select_city">
+                    <div class="search-options_item-text hide">Город получения</div>
+                    <label class="cityLabel" for="getCityInput">Получение:</label>
+                    <input type="text" id="getCityInput" class="cityInput" name="cityInput">
+                    <ul id="getCitySuggestions" class="suggestions"></ul>
+                </div>
+                <div class="select_city">
+                    <div class="search-options_item-text hide">Город возврата</div>
+                    <label class="cityLabel" for="getCityInput">Возврат:</label>
+                    <input type="text" id="returnCityInput" class="cityInput" name="cityInput">
+                    <ul id="returnCitySuggestions" class="suggestions"></ul>
+                </div>
+            </div>
+            <div class="middle-form-row">
+                <div class="input-date">
+                    <label class="dateLabel" for="getDateInput">Получение:</label>
+                    <input type="date" id="getDateInput" class="dateInput" name="dateInput">
+                </div>
+                <div class="input-date">
+                    <label class="dateLabel" for="getDateInput">Получение:</label>
+                    <input type="date" id="returnDateInput" class="dateInput" name="dateInput">
+                </div>
+            </div>
+            <div class="middle-form-row">
+                <div class="input-date">
+                    <label class="dateLabel" for="costFromInput">Стоимость от:</label>
+                    <input type="number" id="costFromInput" class="dateInput" name="costFromInput">
+                </div>
+                <div class="input-date">
+                    <label class="dateLabel" for="costToInput">Стоимость до:</label>
+                    <input type="number" id="costToInput" class="dateInput" name="costToInput">
+                </div>
+            </div>
+            <div class="middle-form-row">
+                <button type="button" id="searchButton">ПОИСК</button>
+            </div>
+        </div>
+        <div class="catalog-wrapper inner-wrapper">
+            <div class="catalog-content">
+                <div class="catalog-inner">
+                    <div class="catalog-list inner-wrapper" id="searchResultBlock">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

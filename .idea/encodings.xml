@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/app/app.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/app/config.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/app/responsewriter.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/handlers/getCarsCards.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/handlers/getMe.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/handlers/handlers.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/handlers/mainPage.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/handlers/main_age.go" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/internal/telegram_app/store/site_api_parser/store.go" charset="UTF-8" />
+    <file url="PROJECT" charset="windows-1251" />
+  </component>
+</project>
