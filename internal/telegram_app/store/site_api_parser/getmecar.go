@@ -42,3 +42,19 @@ func formGetCarsUrl(query models.GetCarQuery, page int) string {
 		"pickup=" + query.Pickup + "&" + "drop=" + query.Drop + "&" + "transport=" + query.TransportType + "&" +
 		"min_price=" + strconv.Itoa(query.MinPrice) + "&" + "max_price=" + strconv.Itoa(query.MaxPrice) + "&il=1"
 }
+
+func (g *GetMeCar) GetDetailedCarPage(url string) ([]byte, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if err != nil {
+		return nil, err
+	}
+	return body, nil
+}

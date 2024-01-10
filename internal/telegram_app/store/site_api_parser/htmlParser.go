@@ -64,3 +64,33 @@ func containsAnyClass(class string, targetClasses []string) bool {
 	}
 	return false
 }
+
+func FormPersonalCarPage(page []byte) string {
+	targetElementID := "catalog-card_container"
+	targetBuffer := &bytes.Buffer{}
+
+	doc, err := html.Parse(bytes.NewReader(page))
+	if err != nil {
+		return ""
+	}
+
+	var copyElement func(*html.Node)
+	copyElement = func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == "div" {
+			for _, attr := range n.Attr {
+				if attr.Key == "class" && attr.Val == targetElementID {
+					html.Render(targetBuffer, n)
+					return
+				}
+			}
+		}
+
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			copyElement(c)
+		}
+	}
+
+	copyElement(doc)
+
+	return targetBuffer.String()
+}

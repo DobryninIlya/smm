@@ -14,3 +14,12 @@ func getMainTemplate() string {
 	}
 	return strings.Join(data, "\n")
 }
+
+func getDetailedCarTemplate() string {
+	data, err := readFile(filepath.Join(htmlPath, "detailed_car.html"))
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	return strings.Join(data, "\n")
+}

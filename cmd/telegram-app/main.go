@@ -42,7 +42,7 @@ func main() {
 			Addr:    config.BindAddr,
 			Handler: server,
 		}
-		if err = srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err = srv.ListenAndServeTLS("cert/cert.crt", "cert/private.key"); err != nil && err != http.ErrServerClosed {
 			log.Fatal(err)
 			cancel()
 		}
