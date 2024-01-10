@@ -3,6 +3,7 @@ body {
     margin: 0 auto;
     color: #091e32;
     font: 16px "Inter", sans-serif;
+    background: white;
 }
 
 .widget {
