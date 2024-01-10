@@ -78,7 +78,7 @@ function SendDataForm() {
     SelectedReturnDate = document.getElementById("returnDateInput").value;
     SelectedMinPrice = document.getElementById("costFromInput").value;
     SelectedMaxPrice = document.getElementById("costToInput").value;
-    var url = "/get_cars?pickup="+SelectedGetDate+"&drop="+SelectedReturnDate+"&transport="+SelectedTabCarType+"&location_slug="+SelectedGetCity+"&drop_city="+SelectedReturnCity+
+    var url = "app/get_cars?pickup="+SelectedGetDate+"&drop="+SelectedReturnDate+"&transport="+SelectedTabCarType+"&location_slug="+SelectedGetCity+"&drop_city="+SelectedReturnCity+
         "&min_price="+SelectedMinPrice+"&max_price="+SelectedMaxPrice;
     console.log(url);
     ProcessQuery(url);
