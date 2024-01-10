@@ -107,30 +107,19 @@ if (catalogList) {
             var link = linkElement ? linkElement.getAttribute("href") : null;
 
             if (link) {
-                sendPostRequest(link);
+                sendPostRequestAndRedirect(link);
             }
         }
     });
 }
 
-function sendPostRequest(link) {
+function sendPostRequestAndRedirect(link) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/app/rent", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log("Успешно отправлено!");
-                replaceCurrentContent(xhr.responseText);
-            } else {
-                console.error("Ошибка при отправке запроса", xhr.statusText);
-            }
-        }
-    };
+    // Добавляем link в URL-параметр запроса
+    var urlWithParams = "/app/rent?link=" + encodeURIComponent(link);
 
-    var data = JSON.stringify({ link: link });
-    xhr.send(data);
+    window.location.href = urlWithParams;
 }
 
 function replaceCurrentContent(newContent) {

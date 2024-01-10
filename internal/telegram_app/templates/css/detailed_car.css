@@ -784,3 +784,7 @@ svg:not(:root) {
 .sidebar-card_style1-bottom {
     padding-top: 16px;
 }
+
+.catalog-card_main-gallery_amount {
+    display: none;
+}

@@ -1,9 +1,8 @@
 package handlers
 
 import (
-	"encoding/json"
+	"fmt"
 	"github.com/sirupsen/logrus"
-	"io"
 	"net/http"
 	"smm_media/internal/telegram_app/page_constructor"
 	site "smm_media/internal/telegram_app/store/site_api_parser"
@@ -16,31 +15,11 @@ type LinkStruct struct {
 func NewDetailCarPageHandler(log *logrus.Logger) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const path = "handlers.api.detailCarView.NewDetailCarPageHandler"
-		var link LinkStruct
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			log.Logf(
-				logrus.ErrorLevel,
-				"%s : Ошибка получение body: %v",
-				path,
-				err.Error(),
-			)
-			ErrorHandlerAPI(w, r, http.StatusBadRequest, ErrInternal)
-			return
-		}
-		err = json.Unmarshal(body, &link)
-		if err != nil {
-			log.Logf(
-				logrus.ErrorLevel,
-				"%s : Ошибка анмаршалинга body: %v",
-				path,
-				err.Error(),
-			)
-			ErrorHandlerAPI(w, r, http.StatusBadRequest, ErrBadPayload)
-			return
-		}
+		url := r.URL
+		linkParam := url.Query().Get("link")
+		fmt.Println(linkParam)
 		gmc := site.NewGetMeCar()
-		carPage, err := gmc.GetDetailedCarPage(link.Link)
+		carPage, err := gmc.GetDetailedCarPage(linkParam)
 		mainBlock := site.FormPersonalCarPage(carPage)
 		if err != nil {
 			log.WithFields(logrus.Fields{
