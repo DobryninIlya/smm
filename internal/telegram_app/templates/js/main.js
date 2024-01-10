@@ -78,7 +78,7 @@ function SendDataForm() {
     SelectedReturnDate = document.getElementById("returnDateInput").value;
     SelectedMinPrice = document.getElementById("costFromInput").value;
     SelectedMaxPrice = document.getElementById("costToInput").value;
-    var url = "app/get_cars?pickup="+SelectedGetDate+"&drop="+SelectedReturnDate+"&transport="+SelectedTabCarType+"&location_slug="+SelectedGetCity+"&drop_city="+SelectedReturnCity+
+    var url = "/app/get_cars?pickup="+SelectedGetDate+"&drop="+SelectedReturnDate+"&transport="+SelectedTabCarType+"&location_slug="+SelectedGetCity+"&drop_city="+SelectedReturnCity+
         "&min_price="+SelectedMinPrice+"&max_price="+SelectedMaxPrice;
     console.log(url);
     ProcessQuery(url);
@@ -93,4 +93,48 @@ function ProcessQuery(url) {
         .then(html => {
             SearchResultBlock.innerHTML = html
         })
+}
+var catalogList = document.querySelector(".catalog-list");
+
+if (catalogList) {
+    catalogList.addEventListener("click", function(event) {
+        var clickedElement = event.target.closest('.catalog-item');
+
+        if (clickedElement) {
+            event.preventDefault();
+
+            var linkElement = clickedElement.querySelector(".catalog-item_link");
+            var link = linkElement ? linkElement.getAttribute("href") : null;
+
+            if (link) {
+                sendPostRequest(link);
+            }
+        }
+    });
+}
+
+function sendPostRequest(link) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/app/rent", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("Успешно отправлено!");
+                replaceCurrentContent(xhr.responseText);
+            } else {
+                console.error("Ошибка при отправке запроса", xhr.statusText);
+            }
+        }
+    };
+
+    var data = JSON.stringify({ link: link });
+    xhr.send(data);
+}
+
+function replaceCurrentContent(newContent) {
+    document.open();
+    document.write(newContent);
+    document.close();
 }

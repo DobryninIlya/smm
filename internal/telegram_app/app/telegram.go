@@ -53,6 +53,7 @@ func (a *App) configureRouter() {
 		r.Get("/", handler.NewMainHandler(a.logger))
 		r.Get("/get_cars", handler.NewGetCarsHandler(a.logger))
 		r.Get("/rent", handler.NewDetailCarPageHandler(a.logger))
+		r.Post("/rent", handler.NewDetailCarPageHandler(a.logger))
 	})
 	a.router.Handle("/static/css/*", http.StripPrefix("/static/css/", cssHandler(http.FileServer(http.Dir(filepath.Join(page_constructor.Path, "css"))))))
 	a.router.Handle("/static/js/*", http.StripPrefix("/static/js/", http.FileServer(http.Dir(filepath.Join(page_constructor.Path, "js")))))

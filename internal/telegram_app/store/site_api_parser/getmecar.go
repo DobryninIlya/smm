@@ -40,7 +40,7 @@ func (g *GetMeCar) GetCarsPage(query models.GetCarQuery, page int) ([]byte, erro
 func formGetCarsUrl(query models.GetCarQuery, page int) string {
 	return domain + location + query.LocationSlug + "/page/" + strconv.Itoa(page) + "?" +
 		"pickup=" + query.Pickup + "&" + "drop=" + query.Drop + "&" + "transport=" + query.TransportType + "&" +
-		"min_price=" + strconv.Itoa(query.MinPrice) + "&" + "max_price=" + strconv.Itoa(query.MaxPrice) + "&il=1"
+		"min_price=" + strconv.Itoa(query.MinPrice) + "&" + "max_price=" + strconv.Itoa(query.MaxPrice) + "&ajax=true"
 }
 
 func (g *GetMeCar) GetDetailedCarPage(url string) ([]byte, error) {
