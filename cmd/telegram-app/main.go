@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"github.com/BurntSushi/toml"
+	"golang.org/x/crypto/acme/autocert"
 	"log"
 	"net/http"
 	"os"
@@ -32,6 +33,13 @@ func main() {
 	ctx, cancel := context.WithCancel(ctx)
 	var server *telegramApp.App
 	var srv *http.Server
+
+	m := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		Cache:      autocert.DirCache("certs"), // Кэширование сертификата
+		HostPolicy: autocert.HostWhitelist("bookingandrent.ru", "www.bookingandrent.ru"),
+	}
+
 	go handleSignals(cancel)
 	go func() {
 		if server, err = telegramApp.Start(ctx, config); err != nil {
@@ -39,10 +47,11 @@ func main() {
 			cancel()
 		}
 		srv = &http.Server{
-			Addr:    config.BindAddr,
-			Handler: server,
+			Addr:      ":https",
+			Handler:   server,
+			TLSConfig: m.TLSConfig(),
 		}
-		if err = srv.ListenAndServeTLS("cert/cert.crt", "cert/private.key"); err != nil && err != http.ErrServerClosed {
+		if err = srv.ListenAndServeTLS("", ""); err != nil && err != http.ErrServerClosed {
 			log.Fatal(err)
 			cancel()
 		}
