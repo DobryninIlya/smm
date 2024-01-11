@@ -1,9 +1,9 @@
 let tg = window.Telegram.WebApp;
 let text = "RENT";
 
-alert(tg.initDataUnsafe.user.username);
-tg.MainButton.setText(text);
-tg.MainButton.show();
-tg.MainButton.enable();
+console.log(tg.initDataUnsafe.user.username);
+console.log(tg.MainButton.setText(text));
+console.log(tg.MainButton.show());
+console.log(tg.MainButton.enable());
 
-// tg.MainButton.requestContact()
+tg.MainButton.requestContact();
