@@ -6,5 +6,5 @@ console.log(tg.MainButton.setText(text));
 console.log(tg.MainButton.show());
 console.log(tg.MainButton.enable());
 
-tg.MainButton.requestContact();
+tg.MainButton.requestContact;
 tg.sendData('{"command":"start"}')
