@@ -7,3 +7,4 @@ console.log(tg.MainButton.show());
 console.log(tg.MainButton.enable());
 
 tg.MainButton.requestContact();
+tg.sendData('{"command":"start"}')
