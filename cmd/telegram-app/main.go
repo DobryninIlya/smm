@@ -36,7 +36,7 @@ func main() {
 
 	m := autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
-		Cache:      autocert.DirCache("certs"), // Кэширование сертификата
+		Cache:      autocert.DirCache("cert"), // Кэширование сертификата
 		Email:      "mr.woodysimpson@gmail.com",
 		HostPolicy: autocert.HostWhitelist("bookingandrent.ru", "www.bookingandrent.ru"),
 	}
