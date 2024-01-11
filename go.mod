@@ -9,6 +9,7 @@ require (
 	github.com/go-faster/errors v0.7.1
 	github.com/gotd/contrib v0.19.0
 	github.com/gotd/td v0.91.0
+	github.com/gotd/td/examples v0.0.0-20240109081719-503e60f48859
 	github.com/lib/pq v1.10.9
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
