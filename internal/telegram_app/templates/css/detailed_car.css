@@ -697,7 +697,7 @@ button, input, optgroup, select, textarea {
 }
 
 .sidebar-card_style1-profile {
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     justify-content: space-between;
 }

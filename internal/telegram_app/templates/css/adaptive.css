@@ -103,11 +103,7 @@
 /*.catalog-content .catalog-list .catalog-item:nth-child(-n + 4) {*/
 /*    margin-top: 0;*/
 /*}*/
-.catalog-content .catalog-list .catalog-item {
-    width: calc(50% - 5vw);
-    /*margin: 4vw 2.5vw 0 0;*/
-    margin: 0px 0px 20px;
-}
+
 /*.catalog-item_top {*/
 /*    height: 16vw;*/
 /*}*/
@@ -124,9 +120,4 @@
 }
 .catalog-profile_main .catalog-content .catalog-list .catalog-item:nth-child(-n + 2) {
     margin-top: 0;
-}
-.catalog-profile_main .catalog-content .catalog-list .catalog-item {
-    width: calc(50% - 16px);
-    margin-top: 11px;
-    margin-right: 32px;
 }

@@ -3,7 +3,7 @@ body {
     margin: 0 auto;
     color: #091e32;
     font: 16px "Inter", sans-serif;
-    background: white;
+    background: rgb(238,238,238);
 }
 
 .widget {
@@ -11,31 +11,25 @@ body {
     flex-direction: column;
     margin: 20px;
     align-items: center;
-    border: 1px solid;
+    /*border: 1px solid;*/
 }
 
 .tabs {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     width: 100%;
-    margin: 20px;
 }
-.category_tab {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 30px;
-    height: auto;
-    border: 1px solid #ccc;
-    cursor: pointer;
-}
+/*.category_tab {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    width: 100%;*/
+/*    min-height: 30px;*/
+/*    height: auto;*/
+/*    border: 1px solid #ccc;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.category_tab.active {
-    background-color: #f0f0f0;
-}
+
 /*#dateContainer {*/
 /*    position: relative;*/
 /*    margin: 20px;*/
@@ -67,8 +61,10 @@ body {
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    height: 65px;
-    margin: 20px;
+    height: 54px;
+    margin-bottom: 4px;
+
+    background: white;
 }
 
 .dateOverlay {
@@ -84,7 +80,7 @@ body {
 .input-date {
     padding: 4px;
     font-size: 16px;
-    border: 1px solid;
+    /*border: 1px solid;*/
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -93,6 +89,7 @@ body {
 
     box-sizing: border-box;
     outline: 0;
+    border-right: 1px solid #e6e9f1;
 }
 
 .dateInput {
@@ -113,6 +110,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: auto;
 }
 
+input[type="date"] {
+    outline: none;
+}
+
 .hide {
     display: none;
 }
@@ -122,9 +123,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .cityInput {
-    padding: 2px;
-    font-size: 16px;
-    border: 1px solid;
+    /*border: 1px solid;*/
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -140,10 +139,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
-    border: 1px solid;
+    /*border: 1px solid;*/
     border-radius: 4px;
     /*position: relative;*/
     cursor: pointer;
+    height: 54px;
+    border-right: 1px solid #e6e9f1;
 }
 
 .search-options_item-text {
@@ -154,11 +155,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .cityLabel {
     margin: 4px;
     font-size: 14px;
-    color: #333;
 }
 
 .cityInput {
-    padding: 8px;
+    padding: 1px;
+    margin-left: 3px;
     font-size: 16px;
     width: calc(100% - 20px);
     box-sizing: border-box;
@@ -167,6 +168,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="number"] {
     width: 90%;
+    outline: none;
 }
 
 .select_city {
@@ -203,42 +205,203 @@ input[type="number"] {
     background-color: #f4f4f4;
 }
 
-/*.catalog-list {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    align-content: start;*/
-/*}*/
 
-/*.catalog-item {*/
-/*    position: relative;*/
-/*    width: 304px;*/
-/*    margin-top: 32px;*/
-/*    margin-right: 30px;*/
-/*}*/
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
 
-/*.catalog-item_top {*/
-/*    position: relative;*/
-/*    height: 224px;*/
-/*}*/
-/*.catalog-item_info {*/
-/*    position: relative;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    background: white;*/
-/*    border-radius: 0 0 10px 10px;*/
-/*    height: calc(100% - 224px);*/
-/*    padding: 18px 24px 27px;*/
-/*}*/
-/*.catalog-item_title {*/
-/*    font-weight: 700;*/
-/*    font-size: 16px;*/
-/*    transition: all 0.3s;*/
-/*    margin-bottom: 9px;*/
-/*}*/
-/*.catalog-item_list {*/
-/*    margin-bottom: 30px;*/
-/*}*/
-/*.catalog-item_price {*/
-/*    padding-right: 42px;*/
-/*    margin-top: auto;*/
-/*}*/
+.modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+button, input, textarea {
+    display: block;
+    overflow: visible;
+    background: transparent;
+    padding: 0;
+}
+
+.select_city:nth-child(even) {
+    border-right: 0;
+}
+
+.tabs-style5 ul li:not(.active) button span {
+    display: none;
+}
+
+.tabs-style5 ul {
+    justify-content: space-between;
+}
+
+.tabs-style5 ul {
+    display: flex;
+    align-items: flex-end;
+}
+
+ol, ul {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ol, ul {
+    box-sizing: border-box;
+}
+
+.banner-search_home .search-tabs ul li {
+    margin-right: 2px;
+}
+
+.tabs-style5 ul li {
+    width: 100%;
+}
+
+ol li, ul li, label {
+    position: relative;
+}
+.banner-search_home .search-tabs ul li button {
+    border: 0;
+}
+
+.tabs-style5 ul li.active button {
+    background: #429cf3;
+    color: white;
+}
+
+.tabs-style5 ul li button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 11px;
+    width: 100%;
+    height: 57px;
+}
+
+button, input, textarea {
+    display: block;
+    overflow: visible;
+    background: transparent;
+    padding: 0;
+}
+
+.tabs-style5 ul li.active button img.active {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.tabs-style5 ul li.active button img {
+    width: 28px;
+}
+
+.tabs-style5 ul li button img.active {
+    position: absolute;
+}
+
+.tabs-style5 ul li button img {
+    transition: all 0.3s;
+    margin: 0 auto;
+}
+
+.tabs-style5 ul li.active button {
+    padding: 5px;
+}
+
+.banner-search_home .search-tabs ul li button {
+    border: 0;
+}
+
+.banner-search_home .search-tabs ul li.category_tab .active button {
+    background: #429cf3;
+    color: white;
+    overflow: hidden;
+}
+
+.category_tab:not(.active) {
+    background: #cfd5da;
+}
+
+.tabs-style5 ul li button {
+    position: relative;
+    border: 1px solid #e6e9f1;
+    border-radius: 8px 8px 0 0;
+    color: #63707d;
+    font-weight: 700;
+    transition: all 0.3s;
+}
+
+.cityLabel {
+    color: rgba(9, 30, 50, 0.4);
+    font-weight: 500;
+    font-size: 12px;
+    margin-bottom: 3px;
+
+}
+
+
+.dateLabel {
+    color: rgba(9, 30, 50, 0.4);
+    font-weight: 500;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+
+#searchButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #429cf3;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    height: 56px;
+    padding: 0 36px;
+    width: 100%;
+}
+
+
+.close {
+    /*color: #fff;*/
+    font-size: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 100;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid #fdead9;
+    border-radius: 8px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 6px;
+    margin-right: 4px;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.sidebar-catalog_card-profile_block {
+    display: none;
+}

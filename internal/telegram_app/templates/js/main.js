@@ -4,9 +4,17 @@ var SelectedGetCity = "";
 var SelectedReturnCity = "";
 var SelectedGetDate = "";
 var SelectedReturnDate = "";
-var SelectedTabCarType = "";
+var SelectedTabCarType = "legkovoj-transport";
 var SelectedMinPrice = 0;
 var SelectedMaxPrice = 2147483647;
+
+let today = new Date().toISOString().substr(0, 10);
+document.querySelector("#getDateInput").value = today;
+
+let future = new Date();
+future.setDate(future.getDate() + 7);
+document.querySelector("#returnDateInput").value = future.toISOString().substr(0, 10);
+
 
 function selectTab(tab, type) {
     // Удаляем активный класс у всех вкладок
@@ -25,6 +33,11 @@ async function loadCities() {
     const response = await fetch('/static/json/cities.json');
     const citiesData = await response.json();
     return citiesData;
+}
+
+function closeModal() {
+    var modal = document.querySelector('.modal');
+    modal.style.display = 'none';
 }
 
 // Функция для добавления вариантов поиска
@@ -94,6 +107,8 @@ function ProcessQuery(url) {
             SearchResultBlock.innerHTML = html
         })
 }
+
+
 var catalogList = document.querySelector(".catalog-list");
 
 if (catalogList) {
@@ -107,23 +122,34 @@ if (catalogList) {
             var link = linkElement ? linkElement.getAttribute("href") : null;
 
             if (link) {
-                sendPostRequestAndRedirect(link);
+                openModal(link);
             }
         }
     });
 }
 
-function sendPostRequestAndRedirect(link) {
-    var xhr = new XMLHttpRequest();
+function openModal(link) {
+    // Создаем элемент модального окна
+    var modal = document.createElement("div");
+    modal.classList.add("modal");
 
-    // Добавляем link в URL-параметр запроса
-    var urlWithParams = "/app/rent?link=" + encodeURIComponent(link);
+    // Создаем iframe для загрузки содержимого страницы
+    var iframe = document.createElement("iframe");
+    iframe.src = "/app/rent?link=" + encodeURIComponent(link);
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
 
-    window.location.href = urlWithParams;
-}
 
-function replaceCurrentContent(newContent) {
-    document.open();
-    document.write(newContent);
-    document.close();
+    // Добавляем iframe в модальное окно
+    modal.innerHTML = '<span class="close .options-style1_item" onclick="closeModal()">&times;</span>'
+    modal.appendChild(iframe);
+
+    // Добавляем модальное окно в body
+    document.body.appendChild(modal);
+
+    // Добавляем обработчик события для закрытия модального окна
+    modal.addEventListener("click", function() {
+        document.body.removeChild(modal);
+    });
 }

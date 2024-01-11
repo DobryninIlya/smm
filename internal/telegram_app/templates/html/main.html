@@ -14,24 +14,85 @@
 <div class="main">
     <div class="widget">
         <div class="tabs">
-            <div class="category_tab active" onclick="selectTab(this,'legkovoj-transport')">
-                Легковой
+<!--            <div class="category_tab active" onclick="selectTab(this,'legkovoj-transport')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon1.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon1-h.svg" alt="icon">-->
+<!--                <span>Легковой</span>-->
+<!--            </div>-->
+<!--            <div class="category_tab" onclick="selectTab(this,'passazhirskij-transport')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon2.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon2-h.svg" alt="icon">-->
+<!--                <span>Пассажирский</span>-->
+<!--            </div>-->
+<!--            <div class="category_tab" onclick="selectTab(this,'gruzovoy-transport-i-spectehnika')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon3.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon3-h.svg" alt="icon">-->
+<!--                <span>Грузовой</span>-->
+<!--            </div>-->
+<!--            <div class="category_tab" onclick="selectTab(this, 'mototehnika')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon4.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon4-h.svg" alt="icon">-->
+<!--                <span>Мото</span>-->
+<!--            </div>-->
+<!--            <div class="category_tab" onclick="selectTab(this,'vodnyj-transport')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon5.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon5-h.svg" alt="icon">-->
+<!--                <span>Водный</span>-->
+<!--            </div>-->
+<!--            <div class="category_tab" onclick="selectTab(this, 'vozdushnaya-tehnika')">-->
+<!--                <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon6.svg" alt="icon">-->
+<!--                <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon6-h.svg" alt="icon">-->
+<!--                <span>Воздушный</span>-->
+<!--            </div>-->
+
+            <div class="search-tabs tabs-style5">
+                <ul>
+                    <li class="category_tab active" onclick="selectTab(this, 'legkovoj-transport')">
+                        <button type="button" data-filter="home-popup1">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon1.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon1-h.svg" alt="icon">
+                            <span>Легковой</span>
+                        </button>
+                    </li>
+                    <li class="category_tab" onclick="selectTab(this, 'passazhirskij-transport')">
+                        <button type="button" data-filter="home-popup2">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon2.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon2-h.svg" alt="icon">
+                            <span>Пассажирский</span>
+                        </button>
+                    </li>
+                    <li class="category_tab" onclick="selectTab(this, 'gruzovoy-transport-i-spectehnika')">
+                        <button type="button" data-filter="home-popup3">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon3.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon3-h.svg" alt="icon">
+                            <span>Грузовой</span>
+                        </button>
+                    </li>
+                    <li class="category_tab" onclick="selectTab(this, 'mototehnika')">
+                        <button type="button" data-filter="home-popup4">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon4.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon4-h.svg" alt="icon">
+                            <span>Мото</span>
+                        </button>
+                    </li>
+                    <li class="category_tab" onclick="selectTab(this, 'vodnyj-transport')">
+                        <button type="button" data-filter="home-popup5">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon5.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon5-h.svg" alt="icon">
+                            <span>Водный</span>
+                        </button>
+                    </li>
+                    <li class="category_tab" onclick="selectTab(this, 'vozdushnaya-tehnika')">
+                        <button type="button" data-filter="home-popup6">
+                            <img class="active" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon6.svg" alt="icon">
+                            <img class="hover" src="https://dev2.getmecar.ru/wp-content/themes/gmc/img/icons/banner-search-icon6-h.svg" alt="icon">
+                            <span>Воздушный</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <div class="category_tab" onclick="selectTab(this,'passazhirskij-transport')">
-                Пассажирский
-            </div>
-            <div class="category_tab" onclick="selectTab(this,'gruzovoy-transport-i-spectehnika')">
-                Грузовой
-            </div>
-            <div class="category_tab" onclick="selectTab(this, 'mototehnika')">
-                Мото
-            </div>
-            <div class="category_tab" onclick="selectTab(this,'vodnyj-transport')">
-                Водный
-            </div>
-            <div class="category_tab" onclick="selectTab(this, 'vozdushnaya-tehnika')">
-                Воздушный
-            </div>
+
+
         </div>
         <div class="middle-form">
             <div class="middle-form-row">
@@ -68,9 +129,10 @@
                     <input type="number" id="costToInput" class="dateInput" name="costToInput">
                 </div>
             </div>
-            <div class="middle-form-row">
-                <button type="button" id="searchButton">ПОИСК</button>
-            </div>
+<!--            <div class="middle-form-row">-->
+<!--                <button type="button" id="searchButton">ПОИСК</button>-->
+<!--            </div>-->
+            <button type="button" id="searchButton">ПОИСК</button>
         </div>
         <div class="catalog-wrapper inner-wrapper">
             <div class="catalog-content">
