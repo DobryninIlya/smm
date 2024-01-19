@@ -5,6 +5,7 @@ type Phone struct {
 	Location   string   `toml:"location"`
 	Like       bool     `toml:"like"`
 	Parse      bool     `toml:"parse"`
+	Comment    bool     `toml:"comment"`
 	ChatLinks  []string `toml:"chat_links"`
 	AddedChats []string `toml:"added_chats"`
 }

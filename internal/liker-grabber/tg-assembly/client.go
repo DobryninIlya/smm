@@ -14,7 +14,6 @@ import (
 	"github.com/gotd/td/telegram/auth"
 	"github.com/gotd/td/telegram/dcs"
 	"github.com/gotd/td/telegram/message"
-	"github.com/gotd/td/telegram/message/peer"
 	"github.com/gotd/td/telegram/updates"
 	"github.com/gotd/td/tg"
 	"github.com/pkg/errors"
@@ -29,7 +28,6 @@ import (
 	"os"
 	"path/filepath"
 	"smm_media/internal/liker-grabber/config"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -77,7 +75,7 @@ func (c *Client) setSessionDir() {
 	}
 }
 
-func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse bool, config *config.Config) (*Client, error) {
+func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse, comment bool, config *config.Config) (*Client, error) {
 	client := &Client{
 		banned:  false,
 		proxy:   ParseProxy(proxyParams),
@@ -163,57 +161,17 @@ func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logge
 	api := client.app.API()
 	client.api = api
 	client.sender = message.NewSender(api)
-	dispatcher.OnNewChannelMessage(func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
-		msg, ok := u.Message.(*tg.Message)
-		if ok {
-			if parse {
-				messages <- msg
-			}
-			if like {
-				peerID, err := peer.NewEntities(e.Users, e.Chats, e.Channels).ExtractPeer(msg.GetPeerID())
-
-				reaction := []tg.ReactionClass{
-					&tg.ReactionEmoji{Emoticon: "👍"},
-				}
-				if err != nil {
-					fmt.Println("Ошибка пиров: " + err.Error())
-				}
-				_, err = client.api.MessagesSendReaction(ctx, &tg.MessagesSendReactionRequest{
-					Peer:     peerID,
-					MsgID:    msg.ID - 1,
-					Reaction: reaction,
-				})
-				reactions, err := client.api.MessagesGetAvailableReactions(ctx, 0)
-				resultReaction, ok := reactions.(*tg.MessagesAvailableReactions)
-				if !ok {
-					fmt.Println("Ошибка при получении реакций")
-					return nil
-				}
-				if err != nil {
-					reaction[0] = &tg.ReactionEmoji{Emoticon: resultReaction.Reactions[0].Reaction}
-					_, err = client.sender.To(peerID).Reaction(ctx, msg.ID, reaction...)
-				}
-				if err != nil {
-					fmt.Println("Ошибка постановки реакции на сообщение: " + err.Error() + "\nВ чате " + msg.GetPeerID().String())
-				} else {
-					successCounter++
-					client.log.Println(strconv.Itoa(successCounter) + " Поставил реакцию на сообщение в чате " + msg.GetPeerID().String())
-				}
-				client.sender.Reply(e, u)
-			}
-		}
-		return nil
-	})
+	dispatcher.OnNewChannelMessage(OnNewChannelMessageHandler(client, like, parse, comment))
 
 	codePrompt := func(ctx context.Context, sentCode *tg.AuthSentCode) (string, error) {
-		fmt.Print("Enter code for " + phone + ": ")
+		log.Print("Enter code for " + phone + ": ")
 		code, err := bufio.NewReader(os.Stdin).ReadString('\n')
 		if err != nil {
 			return "", err
 		}
 		return strings.TrimSpace(code), nil
 	}
-	password := "Nasok174"
+	password := "123456789password"
 	flow := auth.NewFlow(
 		auth.Constant(phone, password, auth.CodeAuthenticatorFunc(codePrompt)),
 		auth.SendCodeOptions{},
@@ -228,9 +186,10 @@ func (c *Client) StartWaiter() error {
 		// Spawning main goroutine.
 		if err := c.app.Run(ctx, func(ctx context.Context) error {
 			// Perform auth if no session is available.
-			if err := c.app.Auth().IfNecessary(ctx, c.flow); err != nil {
-				return errors.Wrap(err, "auth")
-			}
+			c.app.Auth()
+			//if err := c.app.Auth().IfNecessary(ctx, c.flow); err != nil {
+			//	return errors.Wrap(err, "auth")
+			//}
 
 			// Getting info about current user.
 			self, err := c.app.Self(ctx)
@@ -253,13 +212,13 @@ func (c *Client) StartWaiter() error {
 			)
 
 			// Waiting until context is done.
-			fmt.Println("Joining chats")
+			c.log.Println("Joining chats")
 			c.JoinChats()
-			fmt.Println("Listening for updates. Interrupt (Ctrl+C) to stop.")
+			c.log.Println("Listening for updates. Interrupt (Ctrl+C) to stop.")
 			return c.updatesRecovery.Run(ctx, c.api, self.ID, updates.AuthOptions{
 				IsBot: self.Bot,
 				OnStart: func(ctx context.Context) {
-					fmt.Println("Update recovery initialized and started, listening for events")
+					c.log.Println("Update recovery initialized and started, listening for events")
 				},
 			})
 		}); err != nil {
@@ -279,17 +238,17 @@ func (c *Client) JoinChats() {
 		}
 		_, err := c.sender.Resolve(chat).Join(c.ctx)
 		if err != nil {
-			fmt.Println("Ошибка при добавлении в чат: " + err.Error())
-			fmt.Println(chat)
+			c.log.Println("Ошибка при добавлении в чат: " + err.Error())
+			c.log.Println(chat)
 			time.Sleep(time.Second * 30)
 			continue
 		}
 		c.addedChats = append(c.addedChats, chat)
 		time.Sleep(time.Second * 15)
 	}
-	currentList := c.config.Phone[c.phone[1:]].AddedChats
-	newAddedChatList := append(currentList, c.addedChats...)
-	c.config.Phone[c.phone[1:]].AddedChats = newAddedChatList
+	//currentList := c.config.Phone[c.phone[1:]].AddedChats
+	//newAddedChatList := append(currentList, c.addedChats...)
+	c.config.Phone[c.phone[1:]].AddedChats = c.addedChats
 	config.SaveConfig(c.config)
 
 }

@@ -40,18 +40,23 @@ func (t *TelegramAssembly) Start() {
 		proxy := phoneProxy.Proxy
 		like := phoneProxy.Like
 		parse := phoneProxy.Parse
+		comment := phoneProxy.Comment
 		chatLinks := phoneProxy.ChatLinks
-		fmt.Println(chatLinks)
 		wg.Add(1)
 		go func() {
 			t.log.Info("Creating client for login: ", login)
-			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, t.config)
+			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, comment, t.config)
 			if err != nil {
 				t.log.Fatal(err)
 			}
 			err = client.StartWaiter()
 			if err != nil {
-				t.log.Fatal(err)
+				t.log.Logf(
+					logrus.ErrorLevel,
+					"Ошибка запуска клиента %v: %v \nВероятно, вам следует добавить бота заново через скрипт авторизации",
+					login,
+					err.Error(),
+				)
 			}
 			t.clients = append(t.clients, *client)
 			wg.Done()
@@ -69,7 +74,8 @@ func (t *TelegramAssembly) processMessages() {
 		case message := <-t.messages:
 			//case <-t.messages:
 
-			t.log.Info("Message received: ", message.Message)
+			//t.log.Info("Message received: ", message.Message)
+			fmt.Println("Message received: ", message.Message)
 		case <-t.ctx.Done():
 			return
 		}
