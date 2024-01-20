@@ -3,12 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/BurntSushi/toml"
 	"github.com/gotd/td/telegram/dcs"
 	"golang.org/x/net/proxy"
 	"log"
 	"os"
 	"os/signal"
+	"path"
 	"path/filepath"
+	"smm_media/internal/liker-grabber/config"
 	tg_assembly "smm_media/internal/liker-grabber/tg-assembly"
 	"strconv"
 	"strings"
@@ -33,9 +36,8 @@ import (
 	"github.com/gotd/td/tg"
 )
 
-const (
-	api_hash = "8da85b0d5bfe62527e5b244c209159c3"
-	api_id   = "2496"
+var (
+	MainConfigPath = path.Join("configs", "main.toml")
 )
 
 func sessionFolder(phone string) string {
@@ -61,7 +63,7 @@ func checkPhone(phone string) bool {
 	return true
 }
 
-func run(ctx context.Context) error {
+func run(ctx context.Context, mainConfig *config.MainConfig, proxyURL string) error {
 
 	// TG_PHONE is phone number in international format.
 	// Like +4123456789.
@@ -75,11 +77,8 @@ func run(ctx context.Context) error {
 		}
 	}
 	// APP_HASH, APP_ID is from https://my.telegram.org/.
-	appID, err := strconv.Atoi(api_id)
-	if err != nil {
-		return errors.Wrap(err, " parse app id")
-	}
-	appHash := api_hash
+	appID := mainConfig.ApiID
+	appHash := mainConfig.ApiHash
 	if appHash == "" {
 		return errors.New("no app hash")
 	}
@@ -142,13 +141,6 @@ func run(ctx context.Context) error {
 	})
 
 	// Filling client options.
-	var proxyURL string
-	proxyURL = "93.190.141.105:11799:9045007-all-country-PH:2e4f9iq3rd"
-	for proxyURL == "" {
-		fmt.Println("Введите адрес прокси в формате: ip:port:login:password")
-		fmt.Scan(&proxyURL)
-		proxyURL = strings.TrimSpace(proxyURL)
-	}
 
 	//pr := tg_assembly.ParseProxy("93.190.141.105:11799:9045007-all-country-PH:2e4f9iq3rd")
 	pr := tg_assembly.ParseProxy(proxyURL)
@@ -234,10 +226,22 @@ func run(ctx context.Context) error {
 }
 
 func main() {
+	config := config.NewMainConfig()
+	_, err := toml.DecodeFile(MainConfigPath, config)
+	if err != nil {
+		log.Fatal(err)
+	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	var proxyURL string
+	for proxyURL == "" {
+		fmt.Println("ВАЖНО! Необходимо ВСЕГДА использовать прокси.")
+		fmt.Println("Введите адрес прокси в формате: ip:port:login:password")
+		fmt.Scan(&proxyURL)
+		proxyURL = strings.TrimSpace(proxyURL)
+	}
 	defer cancel()
 	for {
-		if err := run(ctx); err != nil {
+		if err := run(ctx, config, proxyURL); err != nil {
 			log.Println("Произошла ошибка при добавлении сессии: ", err)
 
 		}

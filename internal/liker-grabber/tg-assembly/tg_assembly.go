@@ -22,13 +22,15 @@ type TelegramAssembly struct {
 	ctx      context.Context
 }
 
-func NewTelegramAssembly(ctx context.Context, messages chan *tg.Message, log *logrus.Logger, accounts map[string]*model.Phone, config *config.Config) *TelegramAssembly {
+func NewTelegramAssembly(ctx context.Context, messages chan *tg.Message, log *logrus.Logger, accounts map[string]*model.Phone, config *config.Config, mainConfig *config.MainConfig) *TelegramAssembly {
 	return &TelegramAssembly{
 		messages: messages,
 		ctx:      ctx,
 		log:      log,
 		accounts: accounts,
 		config:   config,
+		apiHash:  mainConfig.ApiHash,
+		apiId:    mainConfig.ApiID,
 	}
 }
 
@@ -42,14 +44,17 @@ func (t *TelegramAssembly) Start() {
 		parse := phoneProxy.Parse
 		comment := phoneProxy.Comment
 		chatLinks := phoneProxy.ChatLinks
+		name := phoneProxy.Name
+		lastname := phoneProxy.LastName
+		about := phoneProxy.About
 		wg.Add(1)
 		go func() {
 			t.log.Info("Creating client for login: ", login)
-			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, comment, t.config)
+			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, comment, t.config, t.apiHash, t.apiId)
 			if err != nil {
 				t.log.Fatal(err)
 			}
-			err = client.StartWaiter()
+			err = client.StartWaiter(t.ctx, name, lastname, about)
 			if err != nil {
 				t.log.Logf(
 					logrus.ErrorLevel,

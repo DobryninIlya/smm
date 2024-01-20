@@ -1,6 +1,9 @@
 package model
 
 type Phone struct {
+	Name       string   `toml:"first_name"`
+	LastName   string   `toml:"last_name"`
+	About      string   `toml:"about"`
 	Proxy      string   `toml:"proxy"`
 	Location   string   `toml:"location"`
 	Like       bool     `toml:"like"`

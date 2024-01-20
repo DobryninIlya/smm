@@ -34,8 +34,6 @@ import (
 
 const (
 	sessionPath = "session"
-	api_hash    = "8da85b0d5bfe62527e5b244c209159c3"
-	api_id      = 2496
 )
 
 var successCounter int
@@ -75,15 +73,15 @@ func (c *Client) setSessionDir() {
 	}
 }
 
-func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse, comment bool, config *config.Config) (*Client, error) {
+func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse, comment bool, config *config.Config, hash string, id int) (*Client, error) {
 	client := &Client{
 		banned:  false,
 		proxy:   ParseProxy(proxyParams),
 		waiter:  &floodwait.Waiter{},
 		phone:   phone,
 		log:     log,
-		appID:   api_id,
-		appHash: api_hash,
+		appID:   id,
+		appHash: hash,
 		ctx:     ctx,
 		chats:   chats,
 		config:  config,
@@ -181,37 +179,30 @@ func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logge
 
 }
 
-func (c *Client) StartWaiter() error {
+func (c *Client) StartWaiter(ctx context.Context, firstName, lastName, about string) error {
 	err := c.waiter.Run(c.ctx, func(ctx context.Context) error {
 		// Spawning main goroutine.
 		if err := c.app.Run(ctx, func(ctx context.Context) error {
-			// Perform auth if no session is available.
 			c.app.Auth()
-			//if err := c.app.Auth().IfNecessary(ctx, c.flow); err != nil {
-			//	return errors.Wrap(err, "auth")
-			//}
-
-			// Getting info about current user.
 			self, err := c.app.Self(ctx)
 			if err != nil {
 				return errors.Wrap(err, "call self")
 			}
-
 			name := self.FirstName
 			if self.Username != "" {
-				// Username is optional.
 				name = fmt.Sprintf("%s (@%s)", name, self.Username)
 			}
 			fmt.Println("Current user:", name)
-
 			c.lg.Info("Login",
 				zap.String("first_name", self.FirstName),
 				zap.String("last_name", self.LastName),
 				zap.String("username", self.Username),
 				zap.Int64("id", self.ID),
 			)
-
-			// Waiting until context is done.
+			// Updating user info.
+			if err := updateUserInfo(ctx, c.api, self, firstName, lastName, about); err != nil {
+				log.Println("Ошибка при обновлении информации о пользователе: " + err.Error())
+			}
 			c.log.Println("Joining chats")
 			c.JoinChats()
 			c.log.Println("Listening for updates. Interrupt (Ctrl+C) to stop.")
@@ -275,4 +266,21 @@ func sessionFolder(phone string) string {
 		}
 	}
 	return "phone-" + string(out)
+}
+
+func updateUserInfo(ctx context.Context, api *tg.Client, self *tg.User, name, lastname, about string) error {
+	inputUser := &tg.InputUserSelf{}
+	fullUser, err := api.UsersGetFullUser(ctx, inputUser)
+	if err != nil {
+		return errors.Wrap(err, "get full user")
+	}
+	if self.FirstName == name && self.LastName == lastname && fullUser.FullUser.About == about {
+		return nil // Nothing to update.
+	}
+	_, err = api.AccountUpdateProfile(ctx, &tg.AccountUpdateProfileRequest{
+		FirstName: name,
+		LastName:  lastname,
+		About:     about,
+	})
+	return err
 }

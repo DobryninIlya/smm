@@ -15,12 +15,18 @@ import (
 )
 
 var (
-	ConfigPath = path.Join("configs", "base.toml")
+	ConfigPath     = path.Join("configs", "base.toml")
+	MainConfigPath = path.Join("configs", "main.toml")
 )
 
 func main() {
-	config := config.NewConfig(ConfigPath)
-	_, err := toml.DecodeFile(ConfigPath, config)
+	mainConfig := config.NewMainConfig()
+	_, err := toml.DecodeFile(MainConfigPath, mainConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+	phoneConfig := config.NewConfig(ConfigPath)
+	_, err = toml.DecodeFile(ConfigPath, phoneConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +58,7 @@ func main() {
 	logger.AddHook(fileHook)
 
 	messages := make(chan *tg.Message)
-	server := app.NewApp(ctx, logger, messages, config)
+	server := app.NewApp(ctx, logger, messages, phoneConfig, mainConfig)
 	server.Start()
 }
 
