@@ -51,7 +51,7 @@ func sessionFolder(phone string) string {
 }
 
 func checkPhone(phone string) bool {
-	if len(phone) != 12 {
+	if len(phone) > 15 {
 		return false
 	}
 
@@ -117,6 +117,7 @@ func run(ctx context.Context, mainConfig *config.MainConfig, proxyURL string) er
 	if err != nil {
 		return errors.Wrap(err, "create pebble storage")
 	}
+	defer db.Close()
 	peerDB := pebble.NewPeerStorage(db)
 	lg.Info("Storage", zap.String("path", sessionDir))
 
@@ -216,8 +217,9 @@ func run(ctx context.Context, mainConfig *config.MainConfig, proxyURL string) er
 
 			// Waiting until context is done.
 			log.Println("Аккаунт успешно добавлен")
-			return nil
 
+			//return errors.New("account added, closing")
+			return nil
 		}); err != nil {
 			return errors.Wrap(err, "run")
 		}

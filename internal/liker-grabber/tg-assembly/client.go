@@ -73,7 +73,7 @@ func (c *Client) setSessionDir() {
 	}
 }
 
-func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse, comment bool, config *config.Config, hash string, id int) (*Client, error) {
+func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logger, chats []string, messages chan *tg.Message, like, parse, comment bool, config *config.Config, hash string, id int, clientName string) (*Client, error) {
 	client := &Client{
 		banned:  false,
 		proxy:   ParseProxy(proxyParams),
@@ -159,7 +159,7 @@ func NewClient(ctx context.Context, phone, proxyParams string, log *logrus.Logge
 	api := client.app.API()
 	client.api = api
 	client.sender = message.NewSender(api)
-	dispatcher.OnNewChannelMessage(OnNewChannelMessageHandler(client, like, parse, comment))
+	dispatcher.OnNewChannelMessage(OnNewChannelMessageHandler(client, like, parse, comment, clientName))
 
 	codePrompt := func(ctx context.Context, sentCode *tg.AuthSentCode) (string, error) {
 		log.Print("Enter code for " + phone + ": ")

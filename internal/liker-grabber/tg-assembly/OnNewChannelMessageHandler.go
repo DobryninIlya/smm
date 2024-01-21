@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func OnNewChannelMessageHandler(client *Client, like, parse, comment bool) func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
+func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clientName string) func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
 	return func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
 		msg, ok := u.Message.(*tg.Message)
 		if ok {
@@ -39,13 +39,13 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool) func(
 				}
 				if err != nil {
 					reaction[0] = &tg.ReactionEmoji{Emoticon: resultReaction.Reactions[0].Reaction}
-					_, err = client.sender.To(peerID).Reaction(ctx, msg.ID, reaction...)
 				}
+				_, err = client.sender.To(peerID).Reaction(ctx, msg.ID, reaction...)
 				if err != nil {
 					client.log.Println("Ошибка постановки реакции на сообщение: " + err.Error() + "\nВ чате " + msg.GetPeerID().String())
 				} else {
 					successCounter++
-					client.log.Println(strconv.Itoa(successCounter) + " Поставил реакцию на сообщение в чате " + msg.GetPeerID().String())
+					client.log.Println(clientName + " | " + strconv.Itoa(successCounter) + " Поставил реакцию на сообщение в чате " + msg.GetPeerID().String())
 				}
 			}
 			//client.sender.Reply(e, u)

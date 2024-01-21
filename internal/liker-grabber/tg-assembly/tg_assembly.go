@@ -47,10 +47,11 @@ func (t *TelegramAssembly) Start() {
 		name := phoneProxy.Name
 		lastname := phoneProxy.LastName
 		about := phoneProxy.About
+		clientName := phone + " | " + name + " " + lastname
 		wg.Add(1)
 		go func() {
 			t.log.Info("Creating client for login: ", login)
-			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, comment, t.config, t.apiHash, t.apiId)
+			client, err := NewClient(t.ctx, "+"+login, proxy, t.log, chatLinks, t.messages, like, parse, comment, t.config, t.apiHash, t.apiId, clientName)
 			if err != nil {
 				t.log.Fatal(err)
 			}
