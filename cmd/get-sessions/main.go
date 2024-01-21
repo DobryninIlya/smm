@@ -4,8 +4,21 @@ import (
 	"context"
 	"fmt"
 	"github.com/BurntSushi/toml"
+	pebbledb "github.com/cockroachdb/pebble"
+	figure "github.com/common-nighthawk/go-figure"
+	"github.com/go-faster/errors"
+	boltstor "github.com/gotd/contrib/bbolt"
+	"github.com/gotd/contrib/middleware/floodwait"
+	"github.com/gotd/contrib/middleware/ratelimit"
+	"github.com/gotd/contrib/pebble"
+	"github.com/gotd/contrib/storage"
 	"github.com/gotd/td/telegram/dcs"
+	"go.etcd.io/bbolt"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"golang.org/x/net/proxy"
+	"golang.org/x/time/rate"
+	lj "gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"os"
 	"os/signal"
@@ -16,19 +29,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	pebbledb "github.com/cockroachdb/pebble"
-	"github.com/go-faster/errors"
-	boltstor "github.com/gotd/contrib/bbolt"
-	"github.com/gotd/contrib/middleware/floodwait"
-	"github.com/gotd/contrib/middleware/ratelimit"
-	"github.com/gotd/contrib/pebble"
-	"github.com/gotd/contrib/storage"
-	"go.etcd.io/bbolt"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"golang.org/x/time/rate"
-	lj "gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/gotd/td/telegram"
 	"github.com/gotd/td/telegram/auth"
@@ -228,6 +228,8 @@ func run(ctx context.Context, mainConfig *config.MainConfig, proxyURL string) er
 }
 
 func main() {
+	banner := figure.NewFigure("REACTIVE bot", "", true)
+	banner.Print()
 	config := config.NewMainConfig()
 	_, err := toml.DecodeFile(MainConfigPath, config)
 	if err != nil {

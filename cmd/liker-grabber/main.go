@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/BurntSushi/toml"
+	"github.com/common-nighthawk/go-figure"
 	"github.com/gotd/td/tg"
 	"github.com/sirupsen/logrus"
 	"log"
@@ -20,6 +22,11 @@ var (
 )
 
 func main() {
+	banner := figure.NewFigure("REACTIVE bot", "", true)
+	banner.Print()
+	fmt.Println("========================")
+	fmt.Println("Support TG @dobryninilya")
+	fmt.Println("========================\n\n\n\n\n\n\n")
 	mainConfig := config.NewMainConfig()
 	_, err := toml.DecodeFile(MainConfigPath, mainConfig)
 	if err != nil {
