@@ -1,0 +1,66 @@
+Path = "configs/base.toml"
+# Лучший чат Турции 🇹🇷 с местными https://t.me/+latLdpwwVVM1MWRi
+[phone_proxies]
+
+  [phone_proxies.79299135554]
+    first_name = "Наталья"
+    last_name = "Кузнецова"
+    about = "Пхукет чатик 😍 https://t.me/+u-3zOaA0-1BiZjJi"
+    proxy = "93.190.140.139:13654:9502853-all-country-RU-state-484048-city-551487:w05s80m8s"
+    location = "THAILAND"
+    like = true
+    parse = false
+    comment = false
+    chat_links = ["https://t.me/chernogoria_booking_rent", "https://t.me/billboard_pattaya", "https://t.me/thaiexchat", "https://t.me/pattayaj", "https://t.me/ExchangeMoney_ThaiL"]
+    added_chats = ["https://t.me/chernogoria_booking_rent", "https://t.me/billboard_pattaya", "https://t.me/thaiexchat", "https://t.me/pattayaj", "https://t.me/ExchangeMoney_ThaiL"]
+
+
+  [phone_proxies.5588999017380]
+    first_name = "Rafael"
+    last_name = "Silva"
+    about = "Турция чатик 😍 https://t.me/+latLdpwwVVM1MWRi"
+    proxy = "resi.rainproxy.io:1080:t4w0wqk1a6sj9jh-country-br:m5f1WVZ0q78sjBJ"
+    location = "TURKEY"
+    like = true
+    parse = false
+    comment = false
+    chat_links = ["https://t.me/alaniyalife", "https://t.me/forum_turkey", "https://t.me/turkeypar", "https://t.me/TURKEYlife_chat", "https://t.me/istanbul_topchat"]
+    added_chats = []
+
+  [phone_proxies.5511952738516]
+    first_name = "Isabella"
+    last_name = "Santos"
+    about = "Лучший чат Турции 🇹🇷 с местными https://t.me/+latLdpwwVVM1MWRi"
+    proxy = "resi.rainproxy.io:1080:t4w0wqk1a6sj9jh-country-br:m5f1WVZ0q78sjBJ"
+    location = "TURKEY"
+    like = true
+    parse = false
+    comment = false
+    chat_links = ["https://t.me/chatantalya", "https://t.me/re_locator", "https://t.me/Istanbul_shat", "https://t.me/turkarenda"]
+    added_chats = []
+
+  [phone_proxies.5571992385103]
+
+    first_name = "Mateus"
+    last_name = "Pereira"
+    about = "Турция чатик 😍 https://t.me/+latLdpwwVVM1MWRi"
+    proxy = "resi.rainproxy.io:1080:t4w0wqk1a6sj9jh-country-br:m5f1WVZ0q78sjBJ"
+    location = "TURKEY"
+    like = true
+    parse = false
+    comment = true
+    chat_links = ["https://t.me/chernogoria_booking_rent", "https://t.me/istanbullife4you", "https://t.me/MoneyTurkiye", "https://t.me/buy_sell_turkey"]
+    added_chats = []
+    comments = ["Очень интересно!", "Замечательно!", "Мне нравится!", "Класс!", "Спасибо за информацию!", "Красиво!", "Прекрасное фото!", "Удивительно!", "Какая необычная идея!", "Очаровательно!", "Впечатляюще!", "Круто!", "Отличный пост!", "Полезная информация!", "Успехов вам!", "Какое чудесное место!", "Спасибо за обновление!", "Привлекательно!", "Интересный взгляд!", "Завораживает!", "Прекрасные слова!", "Классный выбор!", "Очень креативно!", "Мечты сбываются!", "Так держать!", "Прекрасная работа!", "Удивительные моменты!", "Спасибо за вдохновение!", "Обожаю такие посты!", "Забавно!", "Полезный совет!", "Это весело!", "Какая креативность!", "Восхитительно!", "Мне нравится ваш взгляд на вещи!", "Отличное восприятие!", "Как здорово, что вы поделились!", "Красочно!", "Приятно видеть такие посты!", "Прекрасный момент!", "Спасибо за позитив!", "Какая интересная идея!", "Интересные мысли!", "Спасибо за вдохновение!", "Очень хорошо подмечено!", "Замечательное настроение!", "Позитивное воздействие!", "Красивые слова!", "Очень понравилось!", "Спасибо за публикацию!", "Так держать!", "Отличная работа!"]
+
+  [phone_proxies.5571992448274]
+    first_name = "Giovanna"
+    last_name = "Costa"
+    about = "Лучший чат Турции 🇹🇷 с местными https://t.me/+latLdpwwVVM1MWRi"
+    proxy = "resi.rainproxy.io:1080:t4w0wqk1a6sj9jh-country-br:m5f1WVZ0q78sjBJ"
+    location = "TURKEY"
+    like = true
+    parse = false
+    comment = false
+    chat_links = ["https://t.me/mersinlife4you", "https://t.me/cryptoHARVESTOR", "https://t.me/alanyalife4you", "https://t.me/Poputchikiturcia"]
+    added_chats = []

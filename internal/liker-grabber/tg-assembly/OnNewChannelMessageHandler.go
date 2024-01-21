@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"github.com/gotd/td/telegram/message/peer"
 	"github.com/gotd/td/tg"
+	"golang.org/x/exp/rand"
 	"strconv"
+	"strings"
+	"time"
 )
 
-func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clientName string) func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
+func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clientName string, comments []string) func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
 	return func(ctx context.Context, e tg.Entities, u *tg.UpdateNewChannelMessage) error {
 		msg, ok := u.Message.(*tg.Message)
 		if ok {
@@ -37,18 +40,24 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 					client.log.Println("Ошибка при получении реакций")
 					return nil
 				}
+				if len(resultReaction.Reactions) == 0 {
+					client.log.Println("Нет доступных реакций в чате " + msg.FromID.String())
+					return nil
+				}
 				if err != nil {
 					reaction[0] = &tg.ReactionEmoji{Emoticon: resultReaction.Reactions[0].Reaction}
 				}
 				_, err = client.sender.To(peerID).Reaction(ctx, msg.ID, reaction...)
 				if err != nil {
+					if strings.Contains(err.Error(), "CHANNEL_INVALID") || strings.Contains(err.Error(), "REACTION_INVALID") {
+						return nil
+					}
 					client.log.Println("Ошибка постановки реакции на сообщение: " + err.Error() + "\nВ чате " + msg.GetPeerID().String())
 				} else {
 					successCounter++
 					client.log.Println(clientName + " | " + strconv.Itoa(successCounter) + " Поставил реакцию на сообщение в чате " + msg.GetPeerID().String())
 				}
 			}
-			//client.sender.Reply(e, u)
 			if comment {
 				message, _ := u.GetMessage().AsNotEmpty()
 				if message.GetPost() {
@@ -56,7 +65,6 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 						Peer:  peerID,
 						MsgID: msg.ID,
 					})
-					//discussionPeer, err := discussion.GetChats()[0]
 					discussionMessage, ok := discussion.Messages[0].(*tg.Message)
 					if !ok {
 						client.log.Println("Ошибка при преобразовании сообщения")
@@ -73,7 +81,7 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 						ChannelID:  channel.ID,
 						AccessHash: channel.AccessHash,
 					})
-					_, err = client.sender.To(discussionPeerID).ReplyMsg(discussion.GetMessages()[0]).Text(ctx, "Круто")
+					_, err = client.sender.To(discussionPeerID).ReplyMsg(discussion.GetMessages()[0]).Text(ctx, getRandomString(comments))
 					if err != nil {
 						client.log.Println("Ошибка отправки сообщения: " + err.Error())
 					}
@@ -82,4 +90,10 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 		}
 		return nil
 	}
+}
+
+func getRandomString(strings []string) string {
+	rand.Seed(uint64(time.Now().UnixNano()))
+	randomIndex := rand.Intn(len(strings))
+	return strings[randomIndex]
 }

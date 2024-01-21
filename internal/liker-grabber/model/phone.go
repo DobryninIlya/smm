@@ -11,4 +11,5 @@ type Phone struct {
 	Comment    bool     `toml:"comment"`
 	ChatLinks  []string `toml:"chat_links"`
 	AddedChats []string `toml:"added_chats"`
+	Comments   []string `toml:"comments"`
 }
