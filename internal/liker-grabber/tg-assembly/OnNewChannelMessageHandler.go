@@ -65,6 +65,10 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 						Peer:  peerID,
 						MsgID: msg.ID,
 					})
+					if len(discussion.Messages) == 0 {
+						client.log.Println("Ошибка. Не удается написать комментарий в канале ", message.GetPeerID())
+						return nil
+					}
 					discussionMessage, ok := discussion.Messages[0].(*tg.Message)
 					if !ok {
 						client.log.Println("Ошибка при преобразовании сообщения")
@@ -85,6 +89,8 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 					if err != nil {
 						client.log.Println("Ошибка отправки сообщения: " + err.Error())
 					}
+					successCounter++
+					client.log.Println(clientName + " | " + strconv.Itoa(successCounter) + " Прокоментировал пост в канале" + msg.GetPeerID().String())
 				}
 			}
 		}

@@ -243,6 +243,9 @@ func (c *Client) JoinChats() {
 		if err != nil {
 			c.log.Println("Ошибка при добавлении в чат: " + err.Error())
 			c.log.Println(chat)
+			if strings.Contains(err.Error(), "not found") {
+				c.log.Println("Вероятно, пользователь заблокирован в чате, либо ссылка на чат указана неверно. Ждем 30 секунд и продолжаем.")
+			}
 			time.Sleep(time.Second * 30)
 			continue
 		}
