@@ -65,6 +65,10 @@ func OnNewChannelMessageHandler(client *Client, like, parse, comment bool, clien
 						Peer:  peerID,
 						MsgID: msg.ID,
 					})
+					if err != nil {
+						client.log.Println("Ошибка при получении сообщения для комментирования: " + err.Error())
+						return nil
+					}
 					if len(discussion.Messages) == 0 {
 						client.log.Println("Ошибка. Не удается написать комментарий в канале ", message.GetPeerID())
 						return nil
