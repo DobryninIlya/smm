@@ -1,5 +1,4 @@
 Path = "configs/base.toml"
-# Лучший чат Турции 🇹🇷 с местными https://t.me/+latLdpwwVVM1MWRi
 [phone_proxies]
 
   [phone_proxies.79299135554]
