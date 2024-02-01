@@ -48,7 +48,7 @@ func main() {
 			cancel()
 		}
 		srv = &http.Server{
-			Addr:      config.BindAddr,
+			Addr:      ":https",
 			Handler:   server,
 			TLSConfig: m.TLSConfig(),
 		}
